@@ -1,0 +1,261 @@
+GET DATA : hiya mnin kan import data csv , sql , xlsv....
+kandiro transform data bach nchofo data 9bel ma ndiro liha load
+
+fach kan import bzf dyla fichier as folder : khass darori ykono nefss  format w nefs smiya dyal (sheet) la kano excel 
+
+SHIFT + ENTER = back to line
+
+-------------------     POWER QUERY     --------------------
+POWER QUERY : fach kandiro transform data katdina l page dyal power QUERY
+    applied steps :
+        source : li hiya link location
+        promoted headers : kat7awel awel row l headers
+        changed type : katbdel type l columns (dicimal , int , text ...)
+
+TEXT COLUMNS PART 
+    split column :
+        BY DELIMINER : n9edo n9assmo column b , ; . ....
+        BY NUMBER OF CHAR : n9assmo column b num of char
+
+    FORMAT :
+        TRIM : KAT7AYED SPACE MN LOWEL O MN LAKHER
+        CLEAN : kay7ayed enter o space zaydin
+        ADD PREFIX : tzid char f bedya dyal column
+        ADD SUFIX : tzid 7arf f lakher dyal column
+
+    EXTRACT : 
+        LENGHT : kat7seb num of char
+        FIRST CHAR : ch7al mn char number takhod mn bedya
+        TEXT BEFOR DELIMINER : ghaykharej text mn 9bel deliminer
+        TEXT BETWEEN DELIMINER : dakachi li bin deliminer @ , ....
+
+Indexing column :
+    add column -> index column 
+
+conditional column :
+    add column -> conditional column
+
+Transpose : kat9dar dir nefs l7aja li kadir pivot
+
+MERGE :
+    home -> merge queries , kan selecte table tani w kan select mn kola table column li atkon 3andhom nefss value
+
+
+APEND : 
+    HOME -> APEND QUERIES , kass ykono nefss columns f ga3 table l anjma3 bach data matkharbe9ch , apend katjma3 lina tables l table wahed aham 7aja ykono columns 9ed 9ed
+     🚨NOTE🚨: mn a7sen n7ayed enable load L table li jma3thom o nkhali gher table li jame3hom bach matkonch data bzf
+    🚨 Kan cree folder o ndir fih files li baghi n apend , w kan importihom as folder bach haka matkonch data ktira
+
+
+Change Data Source Settings : after refreshing data if there are error message that say data files change place , we go to HOME -> data source setting ,
+    and we change the files new source location .
+
+
+Changing Refresh Settings : click right 3la Lfile li bghina n we9fo lih refresh kan 7aydo include in report refresh .
+
+
+
+Bi dashboard -----------------------------------
+
+Data Structure and Data Formatting : 
+    ←2 : Kan selectiw table li bghina o kan modifiw fih type , format ....
+
+Data Categories :  kan7tajoha fel mapping
+    ←2 -> column tools -> Data Categories : bach n9ado format dyal column mapping wach country , state , continent ... 🚨darori had steps dyal n9ado format dyal column
+
+Hierarchy : kan 9dar n cree wahed Hierarchy weste men table → bach ndir fiha l column b tartibe
+
+DATA MODEL : CREATE RELATIONSHIP BETWEEN TABLES FOR ORGANIZE WORK IS IMPOTANT POINT 
+    active and inactive RELATIONSHIP : bin kola two table n9dar ndir line wahed ila zedt line tani kaykon inactive khas f had case n inactive lowl 3ad nrj3 n active tani
+
+🚨🚨FILTER FLOW : khassna nakhdo column mn table li relationne m3a les table bjoj bach maykonch 3adna error 
+
+
+DAX -------------------------------
+DAX   ..  Data Analysis Expressions
+
+Calculated Columns : calculation multiple value
+        ←2 -> new column -> f text column kanketbo smiya li bghina nsemiw column = l code
+            IF(table(column)> 1 , "single" , "multiple") ,  hna 9elna lih sir L column li f table ila value dyal cell > 1 dir single else dir multiple
+
+
+Measure   :   kan creiw wahed culcul b7al pivot
+'        click right 3la table li bghina -> create measure -> o kanketbo fel area lfunction sum , max , if ....
+        🚨 bach njem3o ga3 L measures kandiro wahed fake table ; ←1 -> home -> enter data , kayt creea wahed fake table , kanmchiw l measures li bghina mn : measures tools -> home table ; o kanbedlo lih balssto l fake table
+
+
+
+
+OPERATOR :
+    & : CONCATENATION , 'HAMZA' & ' ' & 'ZR' , AND function kat9bel gher 2 dyal condition like this -> AND (a=1 , b=1) neffs L7aja m3a OR
+    && : condition and
+    || : condition OR
+    IN : based on an given list
+        
+date & time functions : ---
+    weekday: return num from 1 to 7 , optional case say mn ina day nbda L7sab sunday ola monday
+    day: return num from 1 to 31
+    datediff (column , today(),year or days or month ...) kanjebdo biha L age , today dernaha 3la 7sab lyoma bach y7seb date mn value li 3adna tal lyoma , year or ... bach njebdoha b nhar ola L3am ola chhar ..
+    Eomonth() : bach njebdo last day in month
+    Time Intelligence Formulas (we use this with calculate() ): ⬇
+    DATEYTD() : accumulation with year , ghayjma3 2015 kamlin habet o kay accumuli fihom fach aywsel 2016 ghay ybda  mn janvier-2016 o ghadi o kay accumuli fihom .
+    DATEADD() : previous month result (measure , interval(howa chhar li 9bel mno -1) , month ola day ola years)
+    DATESINPERIOD : CALCULATE(SUM(SalesTable[Amount]) , DATESINPERIOD(DatesTable[Date] , MAX(DatesTable[Date]) ,-10,days)) 🚨 KOLA value kharejha lina ghatsawi akher days mjmo3in , -10 hiya akher 10 days (number interval) , days hiya (interval)
+
+Logical Functions : ---
+    iferror : 
+    if(column >5 , do , else)
+    Nested IF : if(column > 4, do , if(cloumn > 3, do , else)) hna kaykon 3adna ktar mn condition so kandiro if f blast else o kankemlo condition dyalna
+    SWITCH(             ### switch b7al if kadir- column , if true , do this
+    [ProductCategory],
+    "Electronics", "High Margin",
+    "Clothing", "Medium Margin",
+    "Furniture", "Low Margin",
+    "Other", "Unknown"
+    )
+Text Functions : 
+    substitute : kadir lina replace , substitute(column , "abc","aaa")
+    search : search for index char , search("char", column)
+
+    Related : related(column) , ghadi yakhod column akhor dyal table akhor li khass ykon deja binathom RELATIONSHIP bchi id ola chi haja
+    relatedtable : sumx(RELATEDTABLE(table),table[column])  , hna gelna lih jma3 liya column li binathom relation m3a other column
+    calculatetable : 
+        FilteredSalesTable = CALCULATETABLE(
+        Sales,
+        Sales[Region] = "West",
+        Sales[Year] = 2023)
+
+    TOPN(number of rows , table[column], asc or desc)
+
+    Summarize
+Math & Stat Functions :
+    count(column): kay7seb cell li Numerique
+    Counta(column): kay7seb numeric o text cells ms makay7sebch blank cell
+    countax : b7al count if dyal excel kat7sb b condition
+    distinctcount(column) : kay distinct 
+    countrows(table): kay7seb lina number of rows
+    Countblank(column): count empty cell
+
+    Calculate(expression,filter1,filter2,....) ; katkhalina n filtriw dakchi li bghina mn column
+        E.g : CALCULATE (SUM(Sales[SalesAmount]) , Sales[SalesAmount] > 1000 , Sales[ProductCategory] = "Electronics")
+
+    all with calculate : the ALL function clear filter from Column , Table .
+    ALLEXCEPT(table,col , col ..) : ghay clear filter mn kolchi ila column li andiro f allexcept
+
+    Filter : (table , lfilter) , kat filtre lina table , filter(table , table[column] = 'abc')
+
+    Sumx(table , expression)
+    countax
+    averagex
+    countx
+
+    Slicer : turn result dynamic value , kankhtaro slicer mn shape , kandiro fih tableau (enter data +) e.g (value , percentage)
+             selectedvalue : function li kadirha f if(selectedvalue(table[column]) = 'Value' ......)
+
+
+    Dynamic format : back nkhaliw format dyal number (200M 20k ...) dynamic kandiro l function f measure
+        measure tool -> format -> dynamic -> (kayn format o measure) 
+        kanmchiw data label f setting dyal shape kanredo values -> none bach ndiro lfromat li bghina 
+        in format tab : "#,##" turn 1000000 to 1,000,000
+                        "0,,.0 M" turn 1000000 to 1.0 M (kola , kat7ayed 000)
+                        "0,.0 K" turn 1000 or 100000 to 1K or 100K
+                        format(): fel format blank kan9edro njem3o 2 dyal value e.g  (measure1 & " - " & measure2) measure1 value number measure2 value % kandiro format() function bach n9ado les format dyal m1 o m2 fel format blank machi measure blank
+                            🚨 bach yban format li derna l values kandiro """" & fel bedya 
+
+
+
+In mapping : fach kandiro map o kaykono 3andna a9alim sghira y9der lprogram may3rafch dok a9alim so kanzido wahed 2 column wahed (latitude , longitude) had 2 column kaykono fihom i7datiyat l minta9a kanjiboha mn google
+
+TOOLTIPS : katmken lina bach mnin n7et l mouse 3la chi chart yban wahed sub-chart 7da chart
+            +page -> format page -> page information -> allow use as tooltip
+                kan7eto f filter -> tooltip direction: lcolumn li ankhedmo bih bach y tfiltra 3lih f chart
+            🚨🚨tooltips : hiya Li katban fach kan 7et l mouse fhci blasa f chart
+
+
+Modeling -> New parametre : and we link it in modeling 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
